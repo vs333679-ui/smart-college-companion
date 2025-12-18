@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Features | Smart College Companion</title>
+
+  <!-- Google Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+  <!-- Font Awesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif;}
+    body{background:#0f172a;color:#fff;line-height:1.6;scroll-behavior:smooth;}
+
+    /* TOP BAR */
+    .topbar{
+      width:100%;
+      background:#1e293b;
+      padding:12px 20px;
+      text-align:center;
+      font-size:1rem;
+      color:#38bdf8;
+      letter-spacing:0.5px;
+      font-weight:500;
+    }
+
+    /* HERO SECTION */
+    .hero{
+      min-height:90vh;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      text-align:center;
+      padding:40px 20px;
+      background:linear-gradient(135deg,#0f172a,#1e293b);
+    }
+    .hero h1{
+      font-size:3rem;
+      font-weight:700;
+      margin-bottom:10px;
+    }
+    .typing{
+      font-size:1.3rem;
+      color:#38bdf8;
+      height:32px;
+      margin-bottom:30px;
+    }
+
+    .features{
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+      gap:25px;
+      max-width:900px;
+      margin:auto;
+      margin-top:40px;
+    }
+    .feature-card{
+      background:#1e293b;
+      padding:25px;
+      border-radius:15px;
+      transition:0.3s;
+      box-shadow:0 10px 30px rgba(0,0,0,0.3);
+    }
+    .feature-card:hover{transform:translateY(-8px);}
+    .feature-card i{
+      font-size:2.5rem;
+      color:#22c55e;
+      margin-bottom:15px;
+      animation:pulse 1.5s infinite;
+    }
+    .feature-card h3{margin-bottom:10px;font-size:1.2rem;}
+
+    @keyframes pulse{
+      0%{transform:scale(1);}50%{transform:scale(1.15);}100%{transform:scale(1);}
+    }
+
+    /* COUNTERS */
+    .stats{
+      padding:70px 20px;
+      background:#020617;
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+      gap:30px;
+      text-align:center;
+    }
+    .stat h2{font-size:2.5rem;color:#38bdf8;}
+    .stat p{margin-top:8px;color:#cbd5f5;}
+
+    /* TESTIMONIALS */
+    .testimonials{
+      padding:80px 20px;
+      background:#0f172a;
+    }
+    .testimonials h2{
+      text-align:center;
+      font-size:2.3rem;
+      margin-bottom:40px;
+    }
+    .testimonial-grid{
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+      gap:25px;
+      max-width:1000px;
+      margin:auto;
+    }
+    .testimonial{
+      background:#1e293b;
+      padding:25px;
+      border-radius:15px;
+      box-shadow:0 10px 30px rgba(0,0,0,0.3);
+    }
+    .testimonial p{font-size:0.95rem;color:#e5e7eb;}
+    .testimonial h4{margin-top:15px;color:#38bdf8;}
+
+    footer{
+      text-align:center;
+      padding:20px;
+      background:#020617;
+      color:#94a3b8;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- TOP BAR -->
+  <div class="topbar">Helping Students Manage College Life Efficiently</div>
+
+  <!-- HERO -->
+  <section class="hero" id="hero">
+    <div>
+      <h1>Smart College Companion</h1>
+      <div class="typing" id="typing"></div>
+
+      <div class="features" id="features">
+        <div class="feature-card">
+          <i class="fa-solid fa-check-circle"></i>
+          <h3>Attendance Tracking</h3>
+          <p>Smart alerts & accurate attendance monitoring</p>
+        </div>
+        <div class="feature-card">
+          <i class="fa-solid fa-book"></i>
+          <h3>Notes Manager</h3>
+          <p>Save, access & organize notes easily</p>
+        </div>
+        <div class="feature-card">
+          <i class="fa-solid fa-robot"></i>
+          <h3>AI Help</h3>
+          <p>Instant academic & college support</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- STATS -->
+  <section class="stats" id="stats">
+    <div class="stat">
+      <h2 class="counter" data-target="100">0</h2>
+      <p>+ Students Using</p>
+    </div>
+    <div class="stat">
+      <h2 class="counter" data-target="500">0</h2>
+      <p>+ Notes Saved</p>
+    </div>
+    <div class="stat">
+      <h2 class="counter" data-target="90">0</h2>
+      <p>% Attendance Accuracy</p>
+    </div>
+  </section>
+
+  <!-- TESTIMONIALS -->
+  <section class="testimonials" id="testimonials">
+    <h2>What Students Say</h2>
+    <div class="testimonial-grid">
+      <div class="testimonial">
+        <p>“This app helped me manage my college life easily. Attendance alerts are super useful!”</p>
+        <h4>– Rahul Sharma</h4>
+      </div>
+      <div class="testimonial">
+        <p>“Smart College Companion keeps all my notes in one place. Very helpful for exams.”</p>
+        <h4>– Priya Verma</h4>
+      </div>
+      <div class="testimonial">
+        <p>“The AI help feature is amazing. It saves a lot of time during busy college days.”</p>
+        <h4>– Aman Singh</h4>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    © 2025 Smart College Companion
+  </footer>
+
+  <script>
+    /* Typing Effect */
+    const texts = [
+      "Track Attendance Smartly",
+      "Manage Notes Easily",
+      "Get AI-Powered Help"
+    ];
+    let index = 0, charIndex = 0;
+    const typingDiv = document.getElementById('typing');
+
+    function typeEffect(){
+      if(charIndex < texts[index].length){
+        typingDiv.textContent += texts[index].charAt(charIndex);
+        charIndex++;
+        setTimeout(typeEffect,100);
+      }else{
+        setTimeout(eraseEffect,1500);
+      }
+    }
+
+    function eraseEffect(){
+      if(charIndex > 0){
+        typingDiv.textContent = texts[index].substring(0,charIndex-1);
+        charIndex--;
+        setTimeout(eraseEffect,60);
+      }else{
+        index = (index + 1) % texts.length;
+        setTimeout(typeEffect,300);
+      }
+    }
+    typeEffect();
+
+    /* Counter Animation */
+    const counters = document.querySelectorAll('.counter');
+    counters.forEach(counter => {
+      const update = () => {
+        const target = +counter.getAttribute('data-target');
+        const count = +counter.innerText;
+        const speed = 50;
+        if(count < target){
+          counter.innerText = Math.ceil(count + target / speed);
+          setTimeout(update,50);
+        }else{
+          counter.innerText = target;
+        }
+      };
+      update();
+    });
+  </script>
+
+</body>
+</html>
