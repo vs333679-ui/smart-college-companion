@@ -1,0 +1,269 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>About My App | Smart College Companion</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+  <style>
+    *{
+      margin:0;
+      padding:0;
+      box-sizing:border-box;
+      font-family:'Poppins', sans-serif;
+    }
+
+    body{
+      background:#f5f7ff;
+      color:#333;
+    }
+
+    /* HEADER */
+    header{
+      background:#ffffff;
+      padding:18px 60px;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      box-shadow:0 4px 10px rgba(0,0,0,0.08);
+    }
+
+    header h1{
+      font-size:26px;
+      font-weight:700;
+      color:#4a00e0;
+    }
+
+    nav a{
+      margin-left:25px;
+      text-decoration:none;
+      color:#444;
+      font-weight:500;
+    }
+
+    nav a:hover{
+      color:#4a00e0;
+    }
+
+    /* HERO */
+    .about-hero{
+      background:linear-gradient(135deg,#667eea,#764ba2,#ff6a88);
+      color:#fff;
+      text-align:center;
+      padding:90px 30px;
+    }
+
+    .about-hero h2{
+      font-size:52px;
+      margin-bottom:15px;
+    }
+
+    .about-hero p{
+      font-size:18px;
+      max-width:850px;
+      margin:auto;
+      line-height:1.7;
+    }
+
+    /* CONTENT */
+    .about-content{
+      max-width:1200px;
+      margin:auto;
+      padding:70px 40px;
+    }
+
+    .about-text{
+      text-align:center;
+      margin-bottom:60px;
+    }
+
+    .about-text h3{
+      font-size:32px;
+      color:#4a00e0;
+      margin-bottom:15px;
+    }
+
+    .about-text p{
+      font-size:17px;
+      line-height:1.8;
+      max-width:900px;
+      margin:auto;
+    }
+
+    /* CARDS */
+    .about-cards{
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+      gap:35px;
+    }
+
+    .card{
+      background:#f9fafb;
+      padding:35px 30px;
+      border-radius:15px;
+      text-align:center;
+      box-shadow:0 15px 35px rgba(0,0,0,0.15);
+      transition:transform 0.4s;
+    }
+
+    .card:hover{
+      transform:translateY(-12px);
+      transition: 0.3s ease;
+      box-shadow: 0 10 px 25px rgba(0,0,0,0,1);
+    }
+
+    .card h4{
+      font-size:22px;
+      margin-bottom:12px;
+      color:#4a00e0;
+    }
+
+    .card p{
+      font-size:15px;
+      color:#555;
+      line-height:1.6;
+    }
+
+    /* SOCIAL SECTION */
+    .social-section{
+      margin-top:70px;
+      text-align:center;
+    }
+
+    .social-section h3{
+      font-size:28px;
+      color:#4a00e0;
+      margin-bottom:25px;
+    }
+
+    .social-links{
+      display:flex;
+      justify-content:center;
+      gap:30px;
+      flex-wrap:wrap;
+    }
+
+    .social-links a{
+      text-decoration:none;
+      padding:14px 30px;
+      border-radius:30px;
+      color:#fff;
+      font-size:16px;
+      font-weight:500;
+      display:flex;
+      align-items:center;
+      gap:10px;
+      transition:transform 0.3s, box-shadow 0.3s;
+    }
+
+    .social-links a:hover{
+      transform:translateY(-5px);
+      box-shadow:0 12px 25px rgba(0,0,0,0.25);
+    }
+
+    .github{
+      background:#24292e;
+    }
+
+    .linkedin{
+      background:#0a66c2;
+    }
+
+    footer{
+      background:#222;
+      color:#ccc;
+      text-align:center;
+      padding:25px;
+      font-size:14px;
+      margin-top:70px;
+    }
+
+    @media(max-width:768px){
+      header{
+        padding:18px 30px;
+      }
+      .about-content{
+        padding:60px 25px;
+      }
+      .about-hero h2{
+        font-size:40px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>Smart College</h1>
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="about.html">About</a>
+    <a href="#">Features</a>
+    <a href="#">Contact</a>
+  </nav>
+</header>
+
+<section class="about-hero">
+  <h2>About My App</h2>
+  <p>
+    Smart College Companion is a student-focused application designed to simplify
+    college life by managing academics, schedules, and career guidance in one place.
+    
+  </p>
+</section>
+
+<section class="about-content">
+
+  <div class="about-text">
+    <h3>Why Smart College Companion?</h3>
+    <p>
+      This app helps students reduce confusion by combining notes, timetables,
+      attendance, and important notices into a single smart platform.
+    </p>
+  </div>
+
+  <div class="about-cards">
+
+    <div class="card">
+      <h4>📚 Academic Tools</h4>
+      <p>Notes, attendance, timetable, and notices in one dashboard.</p>
+    </div>
+
+    <div class="card">
+      <h4>🚀 Smart Vision</h4>
+      <p>Future-ready design with scope for AI and mobile app development.</p>
+    </div>
+
+    <div class="card">
+      <h4>🛠 Tech Stack</h4>
+      <p>HTML, CSS, JavaScript used for frontend development.</p>
+    </div>
+
+  </div>
+
+  <!-- SOCIAL LINKS -->
+  <div class="social-section">
+    <h3>Connect With Me</h3>
+    <div class="social-links">
+      <a href="https://github.com/vs333679-ui"target="blank" class="github">
+        <i class="fab fa-github"></i> GitHub
+      </a>
+
+      <a href="https://www.linkedin.com/in/vaishali-singh-4a1067380/" target="_blank" class="linkedin">
+        <i class="fab fa-linkedin"></i> LinkedIn
+      </a>
+    </div>
+  </div>
+
+</section>
+
+<footer>
+  © 2025 Smart College Companion | About My App| Created by Vaishali Singh
+</footer>
+
+</body>
+</html>
