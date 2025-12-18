@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Contact Us | Smart College Companion</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+<style>
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:'Poppins',sans-serif;
+}
+
+body{
+  min-height:100vh;
+  background:linear-gradient(120deg,#667eea,#764ba2,#43cea2);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  color:#fff;
+}
+
+.contact-wrapper{
+  width:100%;
+  max-width:900px;
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:50px;
+  padding:40px;
+}
+
+.left-text h1{
+  font-size:52px;
+  line-height:1.2;
+}
+
+.left-text p{
+  margin-top:20px;
+  font-size:18px;
+  opacity:0.9;
+}
+
+form{
+  background:rgba(255,255,255,0.15);
+  backdrop-filter:blur(15px);
+  padding:40px;
+  border-radius:20px;
+}
+
+.input-group{
+  position:relative;
+  margin-bottom:25px;
+}
+
+.input-group input,
+.input-group textarea{
+  width:100%;
+  padding:12px 10px;
+  background:transparent;
+  border:none;
+  border-bottom:2px solid rgba(255,255,255,0.5);
+  color:#fff;
+  font-size:15px;
+  outline:none;
+}
+
+.input-group label{
+  position:absolute;
+  top:50%;
+  left:10px;
+  color:#ddd;
+  font-size:14px;
+  transform:translateY(-50%);
+  pointer-events:none;
+  transition:0.3s;
+}
+
+.input-group input:focus + label,
+.input-group input:valid + label,
+.input-group textarea:focus + label,
+.input-group textarea:valid + label{
+  top:-5px;
+  font-size:12px;
+  color:#00fff0;
+}
+
+textarea{
+  resize:none;
+  height:120px;
+}
+
+.warning{
+  color:#ffdddd;
+  font-size:13px;
+  margin-bottom:15px;
+  display:none;
+}
+
+button{
+  width:100%;
+  padding:14px;
+  border:none;
+  border-radius:30px;
+  background:#00fff0;
+  color:#222;
+  font-size:16px;
+  cursor:pointer;
+  font-weight:600;
+  transition:0.3s;
+}
+
+button:hover{
+  background:#ffffff;
+}
+
+@media(max-width:850px){
+  .contact-wrapper{
+    grid-template-columns:1fr;
+    text-align:center;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<div class="contact-wrapper">
+
+  <div class="left-text">
+    <h1>Let’s<br>Talk 👋</h1>
+    <p>
+      Have a question, feedback or idea?  
+      Fill the form carefully and your message will reach us directly.
+    </p>
+  </div>
+
+  <form onsubmit="sendMail(); return false;">
+
+    <div class="warning" id="warning">
+      ⚠ Please fill all fields correctly before submitting.
+    </div>
+
+    <div class="input-group">
+      <input type="text" id="name" required>
+      <label>Your Name</label>
+    </div>
+
+    <div class="input-group">
+      <input type="email" id="email" required>
+      <label>Email Address</label>
+    </div>
+
+    <div class="input-group">
+      <input type="text" id="subject" required>
+      <label>Subject</label>
+    </div>
+
+    <div class="input-group">
+      <textarea id="message" required></textarea>
+      <label>Your Message</label>
+    </div>
+
+    <button type="submit">Send Message 🚀</button>
+  </form>
+
+</div>
+
+<!-- EMAILJS -->
+<script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
+
+<script>
+/* ✅ INITIALIZE EMAILJS WITH YOUR PUBLIC KEY */
+(function(){
+  emailjs.init("5YI8xmu4XDZAozY23");
+})();
+
+function sendMail(){
+  const name = document.getElementById("name").value.trim();
+  const email = document.getElementById("email").value.trim();
+  const subject = document.getElementById("subject").value.trim();
+  const message = document.getElementById("message").value.trim();
+
+  if(!name || !email || !subject || !message){
+    document.getElementById("warning").style.display = "block";
+    return;
+  }
+
+  document.getElementById("warning").style.display = "none";
+
+  /* ✅ SEND MESSAGE TO YOUR EMAIL */
+  emailjs.send(
+    "service_iva45tx",
+    "template_p46iyxc",
+    { name, email, subject, message }
+  )
+  .then(() => {
+    alert("Message sent successfully ✅");
+    document.querySelector("form").reset();
+  })
+  .catch(() => {
+    alert("Failed to send message ❌");
+  });
+}
+</script>
+
+</body>
+</html>
