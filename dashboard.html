@@ -25,6 +25,22 @@ body{
     align-items:center;
     justify-content:space-between;
     overflow:hidden;
+    position: relative;
+}
+
+/* FLOATING STUDY ELEMENTS */
+.floating-icon {
+    position: absolute;
+    width: 50px;
+    height: 50px;
+    opacity: 0.25;
+    animation: floatAnim 20s linear infinite;
+    z-index:0;
+}
+@keyframes floatAnim {
+    0% { transform: translateY(0px) translateX(0px) rotate(0deg);}
+    50% { transform: translateY(-50px) translateX(30px) rotate(180deg);}
+    100% { transform: translateY(0px) translateX(0px) rotate(360deg);}
 }
 
 /* LOGOUT */
@@ -46,6 +62,7 @@ body{
     margin-top:60px;
     text-align:center;
     perspective:1000px; /* for 3D tilt effect */
+    z-index:10;
 }
 
 .hero h1{
@@ -74,6 +91,7 @@ body{
     height:380px;
     margin:40px 0;
     animation: rotateOrbit 30s linear infinite;
+    z-index:10;
 }
 
 @keyframes rotateOrbit{
@@ -104,8 +122,8 @@ body{
 /* NODES */
 .node{
     position:absolute;
-    width:95px;
-    height:95px;
+    width:100px;
+    height:100px;
     background:rgba(255,255,255,0.22);
     backdrop-filter:blur(14px);
     border-radius:50%;
@@ -116,16 +134,20 @@ body{
     cursor:pointer;
     transition:0.4s;
     box-shadow:0 18px 30px rgba(0,0,0,0.3);
+    overflow:hidden;
 }
 
-.node i{
-    font-size:26px;
-    margin-bottom:6px;
+.node img {
+    width: 50px;
+    height: 50px;
+    margin-bottom:5px;
+    object-fit: contain;
 }
 
 .node span{
     font-size:12px;
     font-weight:500;
+    text-align:center;
 }
 
 .node:hover{
@@ -134,7 +156,7 @@ body{
     transform:scale(1.15);
 }
 
-/* PERFECT ALIGNMENT */
+/* NODE POSITIONS */
 .n1{ top:0; left:50%; transform:translateX(-50%); }
 .n2{ top:50%; right:0; transform:translateY(-50%); }
 .n3{ bottom:0; left:50%; transform:translateX(-50%); }
@@ -144,12 +166,14 @@ body{
 /* FOOTER */
 .footer{
     width:100%;
-    padding:15px 10px;
+    padding:20px 15px;
+    background:rgba(0,0,0,0.5);
     text-align:center;
-    font-size:13px;
-    background:rgba(255,255,255,0.15);
+    font-size:14px;
+    color:white;
     backdrop-filter:blur(8px);
     border-top:1px solid rgba(255,255,255,0.25);
+    z-index:10;
 }
 
 .footer strong{
@@ -159,6 +183,12 @@ body{
 </head>
 
 <body>
+
+<!-- FLOATING STUDY ICONS -->
+<img class="floating-icon" style="top:20px; left:30px;" src="https://img.icons8.com/ios-filled/50/ffffff/book.png"/>
+<img class="floating-icon" style="top:150px; left:250px;" src="https://img.icons8.com/ios-filled/50/ffffff/pencil.png"/>
+<img class="floating-icon" style="top:300px; left:80px;" src="https://img.icons8.com/ios-filled/50/ffffff/ai.png"/>
+<img class="floating-icon" style="top:400px; left:300px;" src="https://img.icons8.com/ios-filled/50/ffffff/graduation-cap.png"/>
 
 <button class="logout" onclick="logout()">Logout</button>
 
@@ -174,27 +204,27 @@ body{
     <div class="center">Dashboard</div>
 
     <div class="node n1" onclick="alert('Timetable Coming Soon')">
-        <i class="fas fa-calendar-days"></i>
+        <img src="https://img.icons8.com/external-flat-juicy-fish/64/000000/external-timetable-school-flat-flat-juicy-fish.png" alt="Timetable">
         <span>Timetable</span>
     </div>
 
     <div class="node n2" onclick="alert('Attendance Coming Soon')">
-        <i class="fas fa-check-circle"></i>
+        <img src="https://img.icons8.com/ios-filled/50/000000/checklist.png" alt="Attendance">
         <span>Attendance</span>
     </div>
 
     <div class="node n3" onclick="alert('Notes Coming Soon')">
-        <i class="fas fa-book-open"></i>
+        <img src="https://img.icons8.com/ios-filled/50/000000/open-book.png" alt="Notes">
         <span>Notes</span>
     </div>
 
     <div class="node n4" onclick="alert('Notices Coming Soon')">
-        <i class="fas fa-bullhorn"></i>
+        <img src="https://img.icons8.com/ios-filled/50/000000/megaphone.png" alt="Notices">
         <span>Notices</span>
     </div>
 
     <div class="node n5" onclick="window.location.href='ai.html'">
-        <i class="fas fa-robot"></i>
+        <img src="https://img.icons8.com/ios-filled/50/000000/robot-2.png" alt="AI Help">
         <span>AI Help</span>
     </div>
 
@@ -202,9 +232,8 @@ body{
 
 <!-- FOOTER -->
 <div class="footer">
-    <strong>Smart College Companion</strong> © 2025  
-    <br>
-    Designed as an Innovative Student Project 🚀
+    <p><strong>Smart College Companion</strong> © 2025</p>
+    <p>Email: vs333679@gmail.com | Phone: 6386352697 | Design By Vaishali Singh</p>
 </div>
 
 <script>
