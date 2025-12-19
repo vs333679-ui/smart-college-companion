@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Dashboard | Smart College Companion</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Poppins', sans-serif;
+}
+
+body{
+    min-height:100vh;
+    background: linear-gradient(135deg,#667eea,#764ba2);
+    color:white;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:space-between;
+    overflow:hidden;
+}
+
+/* LOGOUT */
+.logout{
+    position:absolute;
+    top:20px;
+    right:25px;
+    padding:8px 18px;
+    border:none;
+    border-radius:25px;
+    background:rgba(255,255,255,0.25);
+    color:white;
+    cursor:pointer;
+    z-index:100;
+}
+
+/* HERO 3D TEXT */
+.hero{
+    margin-top:60px;
+    text-align:center;
+    perspective:1000px; /* for 3D tilt effect */
+}
+
+.hero h1{
+    font-size:54px;
+    font-weight:800;
+    letter-spacing:2px;
+    text-shadow:
+        1px 1px 0 #5a67d8,
+        2px 2px 0 #4c51bf,
+        3px 3px 0 #434190,
+        4px 4px 0 #3c366b,
+        10px 18px 30px rgba(0,0,0,0.45);
+    transition: transform 0.1s;
+}
+
+.hero p{
+    margin-top:12px;
+    font-size:18px;
+    opacity:0.9;
+}
+
+/* ORBIT */
+.orbit{
+    position:relative;
+    width:380px;
+    height:380px;
+    margin:40px 0;
+    animation: rotateOrbit 30s linear infinite;
+}
+
+@keyframes rotateOrbit{
+    from {transform: rotate(0deg);}
+    to {transform: rotate(360deg);}
+}
+
+/* CENTER */
+.center{
+    position:absolute;
+    top:50%;
+    left:50%;
+    transform:translate(-50%,-50%);
+    width:130px;
+    height:130px;
+    background:white;
+    color:#667eea;
+    border-radius:50%;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    font-weight:700;
+    text-align:center;
+    box-shadow:0 25px 45px rgba(0,0,0,0.35);
+    z-index:10;
+}
+
+/* NODES */
+.node{
+    position:absolute;
+    width:95px;
+    height:95px;
+    background:rgba(255,255,255,0.22);
+    backdrop-filter:blur(14px);
+    border-radius:50%;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    cursor:pointer;
+    transition:0.4s;
+    box-shadow:0 18px 30px rgba(0,0,0,0.3);
+}
+
+.node i{
+    font-size:26px;
+    margin-bottom:6px;
+}
+
+.node span{
+    font-size:12px;
+    font-weight:500;
+}
+
+.node:hover{
+    background:white;
+    color:#667eea;
+    transform:scale(1.15);
+}
+
+/* PERFECT ALIGNMENT */
+.n1{ top:0; left:50%; transform:translateX(-50%); }
+.n2{ top:50%; right:0; transform:translateY(-50%); }
+.n3{ bottom:0; left:50%; transform:translateX(-50%); }
+.n4{ top:50%; left:0; transform:translateY(-50%); }
+.n5{ top:12%; right:12%; }
+
+/* FOOTER */
+.footer{
+    width:100%;
+    padding:15px 10px;
+    text-align:center;
+    font-size:13px;
+    background:rgba(255,255,255,0.15);
+    backdrop-filter:blur(8px);
+    border-top:1px solid rgba(255,255,255,0.25);
+}
+
+.footer strong{
+    font-weight:600;
+}
+</style>
+</head>
+
+<body>
+
+<button class="logout" onclick="logout()">Logout</button>
+
+<!-- HERO -->
+<div class="hero">
+    <h1 id="welcomeText">WELCOME</h1>
+    <p>Smart College Companion Dashboard</p>
+</div>
+
+<!-- ORBIT -->
+<div class="orbit">
+
+    <div class="center">Dashboard</div>
+
+    <div class="node n1" onclick="alert('Timetable Coming Soon')">
+        <i class="fas fa-calendar-days"></i>
+        <span>Timetable</span>
+    </div>
+
+    <div class="node n2" onclick="alert('Attendance Coming Soon')">
+        <i class="fas fa-check-circle"></i>
+        <span>Attendance</span>
+    </div>
+
+    <div class="node n3" onclick="alert('Notes Coming Soon')">
+        <i class="fas fa-book-open"></i>
+        <span>Notes</span>
+    </div>
+
+    <div class="node n4" onclick="alert('Notices Coming Soon')">
+        <i class="fas fa-bullhorn"></i>
+        <span>Notices</span>
+    </div>
+
+    <div class="node n5" onclick="window.location.href='ai.html'">
+        <i class="fas fa-robot"></i>
+        <span>AI Help</span>
+    </div>
+
+</div>
+
+<!-- FOOTER -->
+<div class="footer">
+    <strong>Smart College Companion</strong> © 2025  
+    <br>
+    Designed as an Innovative Student Project 🚀
+</div>
+
+<script>
+const roll = localStorage.getItem("roll");
+
+if(!roll){
+    window.location.href = "login.html";
+}
+
+document.getElementById("welcomeText").innerText =
+    "WELCOME " + roll;
+
+/* LOGOUT */
+function logout(){
+    localStorage.removeItem("roll");
+    window.location.href = "login.html";
+}
+
+/* 3D TILT ON HERO TEXT */
+const heroText = document.querySelector(".hero h1");
+document.addEventListener("mousemove", e => {
+    const x = (window.innerWidth/2 - e.pageX)/25;
+    const y = (window.innerHeight/2 - e.pageY)/25;
+    heroText.style.transform = `rotateY(${x}deg) rotateX(${y}deg)`;
+});
+</script>
+
+</body>
+</html>
