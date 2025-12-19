@@ -47,7 +47,7 @@
     }
 
     nav a:hover {
-   opacity: 1;
+      opacity: 1;
     }
     .nav-cta{
       background-color: #3b82f6;
@@ -210,15 +210,14 @@
 
     /* ================= RESPONSIVE ================= */
     @media (max-width: 768px) {
-      .features-container{
-        flex-direction: column;
-        align-items: center;
+      .hero {
+        grid-template-columns: 1fr;
+        padding: 60px 20px;
       }
-      .navbar ul{
-        flex-direction: column;
-        gap: 10px;
+      .hero-text {
+        margin-bottom: 40px;
       }
-     }
+    }
   </style>
 </head>
 <body>
@@ -239,11 +238,12 @@
     <div class="hero-text">
       <h2>Your Smart College Companion</h2>
       <p>Manage notes, schedules, events, and campus life with one intelligent and beautiful app.</p>
-      <a href="login.html>
-      <button>Get Started</button>
-        </a>
-        </div>
-      <div class="hero-3d">
+      <!-- GET STARTED BUTTON (UNCHANGED) -->
+      <a href="login.html">
+        <button>Get Started</button>
+      </a>
+    </div>
+    <div class="hero-3d">
       <div class="card-3d">
         <img src="https://images.unsplash.com/photo-1524995997946-a1c2e315a42f" alt="College">
         <div class="content">
@@ -258,36 +258,29 @@
   <section class="features">
     <h2>Awesome Features</h2>
     <div class="feature-grid">
-
       <div class="feature-box">
         <h3>📚 Smart Notes</h3>
         <p>Organize your notes and study materials easily.</p>
       </div>
-
       <div class="feature-box">
         <h3>⏰ Timetable</h3>
         <p>Never miss a lecture or deadline again.</p>
       </div>
-
       <div class="feature-box">
         <h3>🤖 AI Assistance</h3>
         <p>Get smart suggestions for studies and productivity.</p>
       </div>
-
       <div class="feature-box">
         <h3>🎓 Career Guide</h3>
         <p>Explore career paths and skill recommendations.</p>
       </div>
-
     </div>
   </section>
 
   <!-- FOOTER -->
   <footer>
-   <p> © 2025 Smart College Companion</p>
-   <p>Email:vs333679@gmail.com
-   Phone:6386352697
-   Design By Vaishali Singh</p>
+   <p>© 2025 Smart College Companion</p>
+   <p>Email: vs333679@gmail.com | Phone: 6386352697 | Design By Vaishali Singh</p>
   </footer>
 
   <!-- AUDIO -->
@@ -308,9 +301,3 @@
 
 </body>
 </html>
-
-
-
-
-
-
