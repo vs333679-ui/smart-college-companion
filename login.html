@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Student Login | Smart College Companion</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Poppins', sans-serif;
+}
+
+body{
+    height:100vh;
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    display:flex;
+    justify-content:center;
+    align-items:center;
+}
+
+.login-box{
+    background:#fff;
+    width:360px;
+    padding:30px;
+    border-radius:15px;
+    box-shadow:0 20px 40px rgba(0,0,0,0.2);
+    text-align:center;
+    animation: fadeIn 1s ease;
+}
+
+@keyframes fadeIn{
+    from{opacity:0; transform:translateY(20px);}
+    to{opacity:1; transform:translateY(0);}
+}
+
+.login-box h2{
+    color:#333;
+    margin-bottom:10px;
+}
+
+.login-box p{
+    color:#777;
+    font-size:14px;
+    margin-bottom:25px;
+}
+
+.input-group{
+    margin-bottom:20px;
+    text-align:left;
+}
+
+.input-group label{
+    font-size:13px;
+    color:#555;
+}
+
+.input-group input{
+    width:100%;
+    padding:10px;
+    border-radius:8px;
+    border:1px solid #ccc;
+    outline:none;
+    margin-top:5px;
+}
+
+.input-group input:focus{
+    border-color:#667eea;
+}
+
+button{
+    width:100%;
+    padding:12px;
+    border:none;
+    border-radius:10px;
+    background:#667eea;
+    color:white;
+    font-size:16px;
+    cursor:pointer;
+    transition:0.3s;
+}
+
+button:hover{
+    background:#5a67d8;
+}
+
+.error{
+    color:red;
+    font-size:14px;
+    margin-top:15px;
+}
+
+.welcome{
+    display:none;
+}
+
+.welcome h1{
+    color:#667eea;
+    margin-bottom:10px;
+}
+
+.welcome p{
+    color:#555;
+}
+</style>
+</head>
+
+<body>
+
+<div class="login-box" id="loginBox">
+    <h2>Welcome Back 👋</h2>
+    <p>Login to Smart College Companion</p>
+
+    <div class="input-group">
+        <label>Roll Number</label>
+        <input type="text" id="roll" placeholder="Enter your roll number">
+    </div>
+
+    <div class="input-group">
+        <label>Password</label>
+        <input type="password" id="password" placeholder="Enter password">
+    </div>
+
+    <button onclick="login()">Login</button>
+
+    <div class="error" id="error"></div>
+</div>
+
+<div class="login-box welcome" id="welcomeBox">
+    <h1>🎉 Welcome!</h1>
+    <p id="welcomeText"></p>
+    <p>You have successfully logged in.</p>
+</div>
+
+<script>
+function login(){
+    const roll = document.getElementById("roll").value;
+    const password = document.getElementById("password").value;
+    const error = document.getElementById("error");
+
+    const validRolls = ["101","102","103","104","105","106"];
+
+    if(validRolls.includes(roll) && password === "123"){
+        localStorage.setItem("roll", roll);
+window.location.href = "dashboard.html";
+
+        document.getElementById("welcomeText").innerText = 
+            "Hello Roll No. " + roll + " 👨‍🎓";
+    } else {
+        error.innerText = "❌ Invalid Roll Number or Password";
+    }
+}
+</script>
+
+</body>
+</html>
