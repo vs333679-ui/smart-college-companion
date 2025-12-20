@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Notes</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+
+<style>
+body{
+    margin:0;
+    padding:20px;
+    background:linear-gradient(135deg,#667eea,#764ba2);
+    font-family:Poppins,sans-serif;
+    color:white;
+}
+.container{
+    max-width:1000px;
+    margin:auto;
+    background:rgba(255,255,255,0.15);
+    padding:25px;
+    border-radius:20px;
+}
+h1{text-align:center;}
+.card{
+    background:white;
+    color:#333;
+    padding:15px;
+    border-radius:15px;
+    margin:15px 0;
+}
+input,select{
+    width:100%;
+    padding:10px;
+    margin-top:10px;
+    border-radius:10px;
+    border:none;
+}
+button{
+    margin-top:15px;
+    padding:10px 18px;
+    border:none;
+    border-radius:10px;
+    background:#667eea;
+    color:white;
+}
+video{width:100%;margin-top:10px;border-radius:10px;}
+a{color:#667eea;text-decoration:none;font-weight:600;}
+</style>
+</head>
+
+<body>
+<div class="container">
+    <h1>📚 Notes</h1>
+
+    <!-- Teacher Upload -->
+    <div id="teacherBox" class="card">
+        <h3>Upload Notes</h3>
+        <select id="subject">
+            <option>Physics</option>
+            <option>Maths</option>
+            <option>CS</option>
+            <option>AI</option>
+        </select>
+        <input id="title" placeholder="Title">
+        <input type="file" id="file">
+        <button onclick="uploadNote()">Upload</button>
+    </div>
+
+    <!-- Notes List -->
+    <div id="notesList"></div>
+</div>
+
+<script>
+const role = localStorage.getItem("role");
+if(!role) location.href="login.html";
+
+let notes = JSON.parse(localStorage.getItem("notesData")) || [];
+
+if(role!=="teacher"){
+    document.getElementById("teacherBox").style.display="none";
+}
+
+function uploadNote(){
+    const file=document.getElementById("file").files[0];
+    if(!file) return alert("Select file");
+
+    const reader=new FileReader();
+    reader.onload=()=>{
+        notes.push({
+            subject:subject.value,
+            title:title.value,
+            type:file.type,
+            data:reader.result
+        });
+        localStorage.setItem("notesData",JSON.stringify(notes));
+        alert("Uploaded");
+        showNotes();
+    };
+    reader.readAsDataURL(file);
+}
+
+function showNotes(){
+    const box=document.getElementById("notesList");
+    box.innerHTML="";
+
+    notes.forEach(n=>{
+        let html=`<div class="card">
+            <h4>${n.subject} - ${n.title}</h4>`;
+
+        if(n.type.startsWith("video")){
+            html+=`<video controls src="${n.data}"></video>`;
+        }else{
+            html+=`<a href="${n.data}" download>Download File</a>`;
+        }
+
+        html+=`</div>`;
+        box.innerHTML+=html;
+    });
+}
+
+showNotes();
+</script>
+</body>
+</html>
