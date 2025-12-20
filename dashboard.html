@@ -4,157 +4,30 @@
 <meta charset="UTF-8">
 <title>Dashboard | Smart College Companion</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap" rel="stylesheet">
-<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
-
 <style>
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-    font-family:'Poppins', sans-serif;
-}
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif;}
+body{min-height:100vh;background:linear-gradient(135deg,#667eea,#764ba2);color:white;display:flex;flex-direction:column;align-items:center;justify-content:space-between;overflow:hidden;position: relative;}
 
-body{
-    min-height:100vh;
-    background: linear-gradient(135deg,#667eea,#764ba2);
-    color:white;
-    display:flex;
-    flex-direction:column;
-    align-items:center;
-    justify-content:space-between;
-    overflow:hidden;
-    position: relative;
-}
+/* FLOATING ICONS */
+.floating-icon{position: absolute;width: 50px;height: 50px;opacity: 0.25;animation: floatAnim 20s linear infinite;z-index:0;}
+@keyframes floatAnim {0% { transform: translateY(0px) translateX(0px) rotate(0deg);}50% { transform: translateY(-50px) translateX(30px) rotate(180deg);}100% { transform: translateY(0px) translateX(0px) rotate(360deg);}}
 
-/* FLOATING STUDY ELEMENTS */
-.floating-icon {
-    position: absolute;
-    width: 50px;
-    height: 50px;
-    opacity: 0.25;
-    animation: floatAnim 20s linear infinite;
-    z-index:0;
-}
-@keyframes floatAnim {
-    0% { transform: translateY(0px) translateX(0px) rotate(0deg);}
-    50% { transform: translateY(-50px) translateX(30px) rotate(180deg);}
-    100% { transform: translateY(0px) translateX(0px) rotate(360deg);}
-}
+.logout{position:absolute;top:20px;right:25px;padding:8px 18px;border:none;border-radius:25px;background:rgba(255,255,255,0.25);color:white;cursor:pointer;z-index:100;}
 
-/* LOGOUT */
-.logout{
-    position:absolute;
-    top:20px;
-    right:25px;
-    padding:8px 18px;
-    border:none;
-    border-radius:25px;
-    background:rgba(255,255,255,0.25);
-    color:white;
-    cursor:pointer;
-    z-index:100;
-}
+.hero{margin-top:60px;text-align:center;perspective:1000px;z-index:10;}
+.hero h1{font-size:54px;font-weight:800;letter-spacing:2px;text-shadow:1px 1px 0 #5a67e8,2px 2px 0 #4c51bf,3px 3px 0 #434190,4px 4px 0 #3c366b,10px 18px 30px rgba(0,0,0,0.45);transition: transform 0.1s;}
+.hero p{margin-top:12px;font-size:18px;opacity:0.9;}
 
-/* HERO 3D TEXT */
-.hero{
-    margin-top:60px;
-    text-align:center;
-    perspective:1000px; /* for 3D tilt effect */
-    z-index:10;
-}
+.orbit{position:relative;width:380px;height:380px;margin:40px 0;animation: rotateOrbit 30s linear infinite;z-index:10;}
+@keyframes rotateOrbit{from {transform: rotate(0deg);}to {transform: rotate(360deg);}}
 
-.hero h1{
-    font-size:54px;
-    font-weight:800;
-    letter-spacing:2px;
-    text-shadow:
-        1px 1px 0 #5a67d8,
-        2px 2px 0 #4c51bf,
-        3px 3px 0 #434190,
-        4px 4px 0 #3c366b,
-        10px 18px 30px rgba(0,0,0,0.45);
-    transition: transform 0.1s;
-}
+.center{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:130px;height:130px;background:white;color:#667eea;border-radius:50%;display:flex;justify-content:center;align-items:center;font-weight:700;text-align:center;box-shadow:0 25px 45px rgba(0,0,0,0.35);z-index:10;}
 
-.hero p{
-    margin-top:12px;
-    font-size:18px;
-    opacity:0.9;
-}
-
-/* ORBIT */
-.orbit{
-    position:relative;
-    width:380px;
-    height:380px;
-    margin:40px 0;
-    animation: rotateOrbit 30s linear infinite;
-    z-index:10;
-}
-
-@keyframes rotateOrbit{
-    from {transform: rotate(0deg);}
-    to {transform: rotate(360deg);}
-}
-
-/* CENTER */
-.center{
-    position:absolute;
-    top:50%;
-    left:50%;
-    transform:translate(-50%,-50%);
-    width:130px;
-    height:130px;
-    background:white;
-    color:#667eea;
-    border-radius:50%;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    font-weight:700;
-    text-align:center;
-    box-shadow:0 25px 45px rgba(0,0,0,0.35);
-    z-index:10;
-}
-
-/* NODES */
-.node{
-    position:absolute;
-    width:100px;
-    height:100px;
-    background:rgba(255,255,255,0.22);
-    backdrop-filter:blur(14px);
-    border-radius:50%;
-    display:flex;
-    flex-direction:column;
-    justify-content:center;
-    align-items:center;
-    cursor:pointer;
-    transition:0.4s;
-    box-shadow:0 18px 30px rgba(0,0,0,0.3);
-    overflow:hidden;
-}
-
-.node img {
-    width: 50px;
-    height: 50px;
-    margin-bottom:5px;
-    object-fit: contain;
-}
-
-.node span{
-    font-size:12px;
-    font-weight:500;
-    text-align:center;
-}
-
-.node:hover{
-    background:white;
-    color:#667eea;
-    transform:scale(1.15);
-}
+.node{position:absolute;width:100px;height:100px;background:rgba(255,255,255,0.22);backdrop-filter:blur(14px);border-radius:50%;display:flex;flex-direction:column;justify-content:center;align-items:center;cursor:pointer;transition:0.4s;box-shadow:0 18px 30px rgba(0,0,0,0.3);overflow:hidden;}
+.node img{width:50px;height:50px;margin-bottom:5px;object-fit:contain;}
+.node span{font-size:12px;font-weight:500;text-align:center;}
+.node:hover{background:white;color:#667eea;transform:scale(1.15);}
 
 /* NODE POSITIONS */
 .n1{ top:0; left:50%; transform:translateX(-50%); }
@@ -163,28 +36,13 @@ body{
 .n4{ top:50%; left:0; transform:translateY(-50%); }
 .n5{ top:12%; right:12%; }
 
-/* FOOTER */
-.footer{
-    width:100%;
-    padding:20px 15px;
-    background:rgba(0,0,0,0.5);
-    text-align:center;
-    font-size:14px;
-    color:white;
-    backdrop-filter:blur(8px);
-    border-top:1px solid rgba(255,255,255,0.25);
-    z-index:10;
-}
-
-.footer strong{
-    font-weight:600;
-}
+.footer{width:100%;padding:20px 15px;background:rgba(0,0,0,0.5);text-align:center;font-size:14px;color:white;backdrop-filter:blur(8px);border-top:1px solid rgba(255,255,255,0.25);z-index:10;}
+.footer strong{font-weight:600;}
 </style>
 </head>
-
 <body>
 
-<!-- FLOATING STUDY ICONS -->
+<!-- FLOATING ICONS -->
 <img class="floating-icon" style="top:20px; left:30px;" src="https://img.icons8.com/ios-filled/50/ffffff/book.png"/>
 <img class="floating-icon" style="top:150px; left:250px;" src="https://img.icons8.com/ios-filled/50/ffffff/pencil.png"/>
 <img class="floating-icon" style="top:300px; left:80px;" src="https://img.icons8.com/ios-filled/50/ffffff/ai.png"/>
@@ -204,27 +62,27 @@ body{
     <div class="center">Dashboard</div>
 
     <div class="node n1" onclick="alert('Timetable Coming Soon')">
-        <img src="https://img.icons8.com/external-flat-juicy-fish/64/000000/external-timetable-school-flat-flat-juicy-fish.png" alt="Timetable">
+        <img src="https://img.icons8.com/external-flat-juicy-fish/64/000000/external-timetable-school-flat-flat-juicy-fish.png">
         <span>Timetable</span>
     </div>
 
-    <div class="node n2" onclick="alert('Attendance Coming Soon')">
-        <img src="https://img.icons8.com/ios-filled/50/000000/checklist.png" alt="Attendance">
+    <div class="node n2" onclick="goToAttendance()">
+        <img src="https://img.icons8.com/ios-filled/50/000000/checklist.png">
         <span>Attendance</span>
     </div>
 
     <div class="node n3" onclick="alert('Notes Coming Soon')">
-        <img src="https://img.icons8.com/ios-filled/50/000000/open-book.png" alt="Notes">
+        <img src="https://img.icons8.com/ios-filled/50/000000/open-book.png">
         <span>Notes</span>
     </div>
 
     <div class="node n4" onclick="alert('Notices Coming Soon')">
-        <img src="https://img.icons8.com/ios-filled/50/000000/megaphone.png" alt="Notices">
+        <img src="https://img.icons8.com/ios-filled/50/000000/megaphone.png">
         <span>Notices</span>
     </div>
 
-    <div class="node n5" onclick="window.location.href='ai.html'">
-        <img src="https://img.icons8.com/ios-filled/50/000000/robot-2.png" alt="AI Help">
+    <div class="node n5" onclick="alert('AI Help Coming Soon')">
+        <img src="https://img.icons8.com/ios-filled/50/000000/robot-2.png">
         <span>AI Help</span>
     </div>
 
@@ -238,27 +96,33 @@ body{
 
 <script>
 const roll = localStorage.getItem("roll");
+const role = localStorage.getItem("role");
 
-if(!roll){
-    window.location.href = "login.html";
+if(!roll || !role){
+    window.location.href="login.html";
 }
 
-document.getElementById("welcomeText").innerText =
-    "WELCOME " + roll;
+document.getElementById("welcomeText").innerText = "WELCOME " + roll;
 
-/* LOGOUT */
+// LOGOUT
 function logout(){
     localStorage.removeItem("roll");
-    window.location.href = "login.html";
+    localStorage.removeItem("role");
+    window.location.href="login.html";
 }
 
-/* 3D TILT ON HERO TEXT */
+// 3D tilt effect on hero text
 const heroText = document.querySelector(".hero h1");
 document.addEventListener("mousemove", e => {
     const x = (window.innerWidth/2 - e.pageX)/25;
     const y = (window.innerHeight/2 - e.pageY)/25;
     heroText.style.transform = `rotateY(${x}deg) rotateX(${y}deg)`;
 });
+
+// Attendance button redirects to attendance page
+function goToAttendance(){
+    window.location.href="attendance.html";
+}
 </script>
 
 </body>
