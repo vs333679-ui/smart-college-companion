@@ -9,7 +9,6 @@
 *{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif;}
 body{min-height:100vh;background:linear-gradient(135deg,#667eea,#764ba2);color:white;display:flex;flex-direction:column;align-items:center;justify-content:space-between;overflow:hidden;position: relative;}
 
-/* FLOATING ICONS */
 .floating-icon{position: absolute;width: 50px;height: 50px;opacity: 0.25;animation: floatAnim 20s linear infinite;z-index:0;}
 @keyframes floatAnim {0% { transform: translateY(0px) translateX(0px) rotate(0deg);}50% { transform: translateY(-50px) translateX(30px) rotate(180deg);}100% { transform: translateY(0px) translateX(0px) rotate(360deg);}}
 
@@ -29,7 +28,6 @@ body{min-height:100vh;background:linear-gradient(135deg,#667eea,#764ba2);color:w
 .node span{font-size:12px;font-weight:500;text-align:center;}
 .node:hover{background:white;color:#667eea;transform:scale(1.15);}
 
-/* NODE POSITIONS */
 .n1{ top:0; left:50%; transform:translateX(-50%); }
 .n2{ top:50%; right:0; transform:translateY(-50%); }
 .n3{ bottom:0; left:50%; transform:translateX(-50%); }
@@ -40,9 +38,9 @@ body{min-height:100vh;background:linear-gradient(135deg,#667eea,#764ba2);color:w
 .footer strong{font-weight:600;}
 </style>
 </head>
+
 <body>
 
-<!-- FLOATING ICONS -->
 <img class="floating-icon" style="top:20px; left:30px;" src="https://img.icons8.com/ios-filled/50/ffffff/book.png"/>
 <img class="floating-icon" style="top:150px; left:250px;" src="https://img.icons8.com/ios-filled/50/ffffff/pencil.png"/>
 <img class="floating-icon" style="top:300px; left:80px;" src="https://img.icons8.com/ios-filled/50/ffffff/ai.png"/>
@@ -50,15 +48,12 @@ body{min-height:100vh;background:linear-gradient(135deg,#667eea,#764ba2);color:w
 
 <button class="logout" onclick="logout()">Logout</button>
 
-<!-- HERO -->
 <div class="hero">
     <h1 id="welcomeText">WELCOME</h1>
     <p>Smart College Companion Dashboard</p>
 </div>
 
-<!-- ORBIT -->
 <div class="orbit">
-
     <div class="center">Dashboard</div>
 
     <div class="node n1" onclick="alert('Timetable Coming Soon')">
@@ -71,7 +66,7 @@ body{min-height:100vh;background:linear-gradient(135deg,#667eea,#764ba2);color:w
         <span>Attendance</span>
     </div>
 
-    <div class="node n3" onclick="alert('Notes Coming Soon')">
+    <div class="node n3" onclick="goToNotes()">
         <img src="https://img.icons8.com/ios-filled/50/000000/open-book.png">
         <span>Notes</span>
     </div>
@@ -85,10 +80,8 @@ body{min-height:100vh;background:linear-gradient(135deg,#667eea,#764ba2);color:w
         <img src="https://img.icons8.com/ios-filled/50/000000/robot-2.png">
         <span>AI Help</span>
     </div>
-
 </div>
 
-<!-- FOOTER -->
 <div class="footer">
     <p><strong>Smart College Companion</strong> © 2025</p>
     <p>Email: vs333679@gmail.com | Phone: 6386352697 | Design By Vaishali Singh</p>
@@ -104,14 +97,12 @@ if(!roll || !role){
 
 document.getElementById("welcomeText").innerText = "WELCOME " + roll;
 
-// LOGOUT
 function logout(){
     localStorage.removeItem("roll");
     localStorage.removeItem("role");
     window.location.href="login.html";
 }
 
-// 3D tilt effect on hero text
 const heroText = document.querySelector(".hero h1");
 document.addEventListener("mousemove", e => {
     const x = (window.innerWidth/2 - e.pageX)/25;
@@ -119,9 +110,12 @@ document.addEventListener("mousemove", e => {
     heroText.style.transform = `rotateY(${x}deg) rotateX(${y}deg)`;
 });
 
-// Attendance button redirects to attendance page
 function goToAttendance(){
     window.location.href="attendance.html";
+}
+
+function goToNotes(){
+    window.location.href="notes.html";
 }
 </script>
 
