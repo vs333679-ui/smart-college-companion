@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Attendance | Smart College Companion</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+body{
+    margin:0;
+    font-family:Poppins, sans-serif;
+    background:linear-gradient(135deg,#667eea,#764ba2);
+    color:white;
+    padding:20px;
+}
+.container{
+    max-width:1100px;
+    margin:auto;
+    background:rgba(255,255,255,0.15);
+    backdrop-filter:blur(12px);
+    border-radius:20px;
+    padding:30px;
+}
+h1{text-align:center;margin-bottom:20px;}
+table{width:100%;border-collapse:collapse;margin-top:20px;}
+th,td{border:1px solid rgba(255,255,255,0.3);padding:10px;text-align:center;}
+th{background:rgba(0,0,0,0.3);}
+input[type="checkbox"]{transform: scale(1.2);}
+.save-btn{margin-top:20px;background:#2d3748;color:white;padding:10px 18px;border-radius:12px;cursor:pointer;}
+.back{margin-top:15px;display:inline-block;color:white;text-decoration:none;}
+.total-box{margin-top:25px;padding:15px;background:rgba(0,0,0,0.35);border-radius:12px;font-size:18px;text-align:center;}
+/* Bar container */
+.bar-container{
+    width:100%;
+    background:rgba(255,255,255,0.2);
+    border-radius:12px;
+    height:18px;
+}
+.bar-fill{
+    height:100%;
+    border-radius:12px;
+    transition: width 0.6s ease;
+}
+</style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Attendance</h1>
+
+    <!-- Teacher View -->
+    <div id="teacherView" style="display:none;">
+        <p>Mark attendance for students:</p>
+        <table id="teacherTable">
+            <thead>
+                <tr></tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+        <button class="save-btn" onclick="saveTeacherAttendance()">💾 Save Attendance</button>
+    </div>
+
+    <!-- Student View -->
+    <div id="studentView" style="display:none;">
+        <p>Your attendance:</p>
+        <table id="studentTable">
+            <thead>
+                <tr>
+                    <th>Subject</th>
+                    <th>Present</th>
+                    <th>Total Classes</th>
+                    <th>Percentage</th>
+                    <th>Visual</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+        <div class="total-box" id="totalAttendance"></div>
+    </div>
+
+    <a class="back" href="dashboard.html">⬅ Back to Dashboard</a>
+</div>
+
+<script>
+// Subjects & students
+const subjects = ["Physics","Maths","CS","DS","AI","Physics Lab"];
+const students = ["101","102","103","104","105","106"];
+
+// Role & roll
+const role = localStorage.getItem("role");
+const roll = localStorage.getItem("roll");
+if(!role || !roll){ window.location.href="login.html"; }
+
+// Load attendance or initialize
+let attendance = JSON.parse(localStorage.getItem("attendanceData") || "{}");
+students.forEach(r=>{
+    if(!attendance[r]){
+        attendance[r]={};
+        subjects.forEach(s=>attendance[r][s]={present:0,total:0});
+    }
+});
+
+// Show view
+if(role==="teacher"){
+    document.getElementById("teacherView").style.display="block";
+    loadTeacherTable();
+} else if(role==="student"){
+    document.getElementById("studentView").style.display="block";
+    loadStudentTable();
+}
+
+// Teacher functions
+function loadTeacherTable(){
+    const tbody = document.querySelector("#teacherTable tbody");
+    const thead = document.querySelector("#teacherTable thead tr");
+    tbody.innerHTML="";
+    thead.innerHTML = "<th>Roll</th>"+subjects.map(s=>`<th>${s}</th>`).join("");
+
+    students.forEach(r=>{
+        const tr = document.createElement("tr");
+        tr.setAttribute("data-roll",r);
+        let rowHTML = `<td>${r}</td>`;
+        subjects.forEach(s=>{
+            const checked = attendance[r][s].present>0?"checked":"";
+            rowHTML += `<td><input type="checkbox" data-subject="${s}" ${checked}></td>`;
+        });
+        tr.innerHTML = rowHTML;
+        tbody.appendChild(tr);
+    });
+}
+
+function saveTeacherAttendance(){
+    document.querySelectorAll("#teacherTable tbody tr").forEach(tr=>{
+        const r = tr.getAttribute("data-roll");
+        subjects.forEach(s=>{
+            const cb = tr.querySelector(`input[data-subject='${s}']`);
+            attendance[r][s].total++;
+            if(cb.checked) attendance[r][s].present++;
+        });
+    });
+    localStorage.setItem("attendanceData",JSON.stringify(attendance));
+    alert("✅ Attendance saved!");
+}
+
+// Student functions
+function loadStudentTable(){
+    const tbody = document.querySelector("#studentTable tbody");
+    tbody.innerHTML="";
+    let totalP=0,totalT=0;
+    subjects.forEach(s=>{
+        const p = attendance[roll][s].present;
+        const t = attendance[roll][s].total;
+        totalP += p; totalT += t;
+        const per = t?((p/t)*100).toFixed(1):0;
+
+        // Determine bar color
+        let color="#38a169"; // green
+        if(per<50) color="#e53e3e"; // red
+        else if(per<75) color="#ed8936"; // orange
+
+        const tr = document.createElement("tr");
+        tr.innerHTML=`
+            <td>${s}</td>
+            <td>${p}</td>
+            <td>${t}</td>
+            <td>${per}%</td>
+            <td>
+                <div class="bar-container">
+                    <div class="bar-fill" style="width:${per}%;background:${color};"></div>
+                </div>
+            </td>
+        `;
+        tbody.appendChild(tr);
+    });
+    const totalPer = totalT?((totalP/totalT)*100).toFixed(1):0;
+    document.getElementById("totalAttendance").innerText=`Total Attendance: ${totalPer}% (${totalP}/${totalT})`;
+}
+</script>
+
+</body>
+</html>
