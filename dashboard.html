@@ -5,6 +5,7 @@
 <title>Dashboard | Smart College Companion</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap" rel="stylesheet">
+
 <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif;}
 body{min-height:100vh;background:linear-gradient(135deg,#667eea,#764ba2);color:white;display:flex;flex-direction:column;align-items:center;justify-content:space-between;overflow:hidden;position: relative;}
@@ -41,6 +42,7 @@ body{min-height:100vh;background:linear-gradient(135deg,#667eea,#764ba2);color:w
 
 <body>
 
+<!-- Floating icons -->
 <img class="floating-icon" style="top:20px; left:30px;" src="https://img.icons8.com/ios-filled/50/ffffff/book.png"/>
 <img class="floating-icon" style="top:150px; left:250px;" src="https://img.icons8.com/ios-filled/50/ffffff/pencil.png"/>
 <img class="floating-icon" style="top:300px; left:80px;" src="https://img.icons8.com/ios-filled/50/ffffff/ai.png"/>
@@ -56,29 +58,31 @@ body{min-height:100vh;background:linear-gradient(135deg,#667eea,#764ba2);color:w
 <div class="orbit">
     <div class="center">Dashboard</div>
 
-    <div class="node n1" onclick="openTimetable()">
-    <img src="https://img.icons8.com/external-flat-juicy-fish/64/000000/external-timetable-school-flat-flat-juicy-fish.png">
-    <span>Timetable</span>
-</div>
+    <!-- Timetable -->
+    <div class="node n1" onclick="goToTimetable()">
+        <img src="https://img.icons8.com/external-flat-juicy-fish/64/000000/external-timetable-school-flat-flat-juicy-fish.png">
+        <span>Timetable</span>
+    </div>
 
-<script>
-function openTimetable(){
-    window.location.href = "timetable.html";
-}
-</script>
-<div class="node n2" onclick="window.location.href='attendance.html'"> <img src="https://img.icons8.com/ios-filled/50/task.png">
-    <span>Attendance</span>
-</div>
+    <!-- Attendance (FIXED ICON) -->
+    <div class="node n2" onclick="goToAttendance()">
+        <img src="https://img.icons8.com/ios-filled/50/000000/checklist.png">
+        <span>Attendance</span>
+    </div>
+
+    <!-- Notes -->
     <div class="node n3" onclick="goToNotes()">
         <img src="https://img.icons8.com/ios-filled/50/000000/open-book.png">
         <span>Notes</span>
     </div>
 
+    <!-- Notices -->
     <div class="node n4" onclick="alert('Notices Coming Soon')">
         <img src="https://img.icons8.com/ios-filled/50/000000/megaphone.png">
         <span>Notices</span>
     </div>
 
+    <!-- AI Help -->
     <div class="node n5" onclick="alert('AI Help Coming Soon')">
         <img src="https://img.icons8.com/ios-filled/50/000000/robot-2.png">
         <span>AI Help</span>
@@ -106,12 +110,9 @@ function logout(){
     window.location.href="login.html";
 }
 
-const heroText = document.querySelector(".hero h1");
-document.addEventListener("mousemove", e => {
-    const x = (window.innerWidth/2 - e.pageX)/25;
-    const y = (window.innerHeight/2 - e.pageY)/25;
-    heroText.style.transform = `rotateY(${x}deg) rotateX(${y}deg)`;
-});
+function goToTimetable(){
+    window.location.href="timetable.html";
+}
 
 function goToAttendance(){
     window.location.href="attendance.html";
@@ -120,6 +121,13 @@ function goToAttendance(){
 function goToNotes(){
     window.location.href="notes.html";
 }
+
+const heroText = document.querySelector(".hero h1");
+document.addEventListener("mousemove", e => {
+    const x = (window.innerWidth/2 - e.pageX)/25;
+    const y = (window.innerHeight/2 - e.pageY)/25;
+    heroText.style.transform = `rotateY(${x}deg) rotateX(${y}deg)`;
+});
 </script>
 
 </body>
