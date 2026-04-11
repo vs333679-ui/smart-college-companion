@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Notice Board</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+body {
+  font-family: Arial;
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  color: white;
+}
+
+.container {
+  padding: 20px;
+}
+
+.teacher-panel {
+  background: rgba(255,255,255,0.1);
+  padding: 15px;
+  margin-bottom: 20px;
+  display: none;
+}
+
+input, textarea {
+  width: 100%;
+  margin: 10px 0;
+  padding: 10px;
+}
+
+button {
+  padding: 10px;
+  background: #00ffcc;
+  border: none;
+  cursor: pointer;
+}
+
+.notice {
+  background: rgba(255,255,255,0.2);
+  margin: 10px 0;
+  padding: 10px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+  <h1>📢 Notice Board</h1>
+
+  <!-- Teacher Panel -->
+  <div class="teacher-panel" id="teacherPanel">
+    <input type="text" id="title" placeholder="Title">
+    <textarea id="content" placeholder="Notice"></textarea>
+    <button onclick="addNotice()">Post Notice</button>
+  </div>
+
+  <!-- Notices -->
+  <div id="noticeList"></div>
+</div>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.12.0/firebase-app.js";
+import { getFirestore, collection, addDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/12.12.0/firebase-firestore.js";
+
+// Firebase config (your)
+const firebaseConfig = {
+  apiKey: "AIzaSyBSS0piBvPRbNqhlubGakfNTBZaL9QB2tw",
+  authDomain: "smart-college-companion545454.firebaseapp.com",
+  projectId: "smart-college-companion545454",
+  storageBucket: "smart-college-companion545454.firebasestorage.app",
+  messagingSenderId: "727118844263",
+  appId: "1:727118844263:web:b40714ee8a8822d0565fc2"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
+// 🔐 ROLE CHECK
+let role = localStorage.getItem("role");
+
+if(role === "teacher"){
+  document.getElementById("teacherPanel").style.display = "block";
+}
+
+// ➕ ADD NOTICE
+window.addNotice = async function(){
+  let title = document.getElementById("title").value;
+  let content = document.getElementById("content").value;
+
+  if(title === "" || content === ""){
+    alert("Fill all fields");
+    return;
+  }
+
+  await addDoc(collection(db, "notices"), {
+    title: title,
+    content: content,
+    date: new Date().toLocaleString()
+  });
+};
+
+// 📢 LOAD NOTICES
+onSnapshot(collection(db, "notices"), (snapshot) => {
+  let output = "";
+
+  snapshot.forEach(doc => {
+    let data = doc.data();
+
+    output += `
+      <div class="notice">
+        <h3>${data.title}</h3>
+        <p>${data.content}</p>
+        <small>${data.date}</small>
+      </div>
+    `;
+  });
+
+  document.getElementById("noticeList").innerHTML = output;
+});
+</script>
+
+</body>
+</html>
