@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>AI Chat | Smart College Companion</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+body {
+    background: #0f172a;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.chat-container {
+    width: 400px;
+    height: 600px;
+    background: #1e293b;
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 0 30px rgba(0,0,0,0.5);
+    overflow: hidden;
+}
+
+.chat-header {
+    background: linear-gradient(45deg, #6366f1, #22c55e);
+    padding: 15px;
+    text-align: center;
+    font-weight: 600;
+    font-size: 18px;
+}
+
+.chat-box {
+    flex: 1;
+    padding: 15px;
+    overflow-y: auto;
+}
+
+.message {
+    margin: 10px 0;
+    padding: 10px 14px;
+    border-radius: 12px;
+    max-width: 75%;
+    animation: fadeIn 0.3s ease;
+}
+
+.user {
+    background: #6366f1;
+    align-self: flex-end;
+}
+
+.bot {
+    background: #334155;
+    align-self: flex-start;
+}
+
+.chat-input {
+    display: flex;
+    padding: 10px;
+    background: #0f172a;
+}
+
+.chat-input input {
+    flex: 1;
+    padding: 10px;
+    border-radius: 10px;
+    border: none;
+    outline: none;
+}
+
+.chat-input button {
+    margin-left: 10px;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 10px;
+    background: #22c55e;
+    color: white;
+    cursor: pointer;
+}
+
+@keyframes fadeIn {
+    from {opacity: 0; transform: translateY(10px);}
+    to {opacity: 1; transform: translateY(0);}
+}
+</style>
+</head>
+
+<body>
+
+<div class="chat-container">
+    <div class="chat-header">🤖 AI Assistant</div>
+
+    <div class="chat-box" id="chatBox">
+        <div class="message bot">Hello 👋 Ask me anything!</div>
+    </div>
+
+    <div class="chat-input">
+        <input type="text" id="userInput" placeholder="Type your message..." />
+        <button onclick="sendMessage()">Send</button>
+    </div>
+</div>
+
+
+
+<script>
+const API_KEY = "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"; // ⚠️ demo ke baad delete karna
+
+async function sendMessage() {
+    const input = document.getElementById("userInput");
+    const chatBox = document.getElementById("chatBox");
+
+    if (input.value.trim() === "") return;
+
+    const userText = input.value;
+
+    // User message
+    const userMsg = document.createElement("div");
+    userMsg.className = "message user";
+    userMsg.innerText = userText;
+    chatBox.appendChild(userMsg);
+
+    input.value = "";
+
+    // Bot message
+    const botMsg = document.createElement("div");
+    botMsg.className = "message bot";
+    botMsg.innerText = "Typing...";
+    chatBox.appendChild(botMsg);
+
+    chatBox.scrollTop = chatBox.scrollHeight;
+
+    // 🔥 SMART NAVIGATION
+    const lowerText = userText.toLowerCase();
+
+    if (lowerText.includes("notes")) {
+        botMsg.innerText = "Opening Notes 📚";
+        setTimeout(() => window.location.href = "notes.html", 1000);
+        return;
+    }
+
+    if (lowerText.includes("attendance")) {
+        botMsg.innerText = "Opening Attendance 📊";
+        setTimeout(() => window.location.href = "attendance.html", 1000);
+        return;
+    }
+
+    if (lowerText.includes("notice")) {
+        botMsg.innerText = "Opening Notices 📢";
+        setTimeout(() => window.location.href = "notice.html", 1000);
+        return;
+    }
+
+    try {
+        const res = await fetch("https://api.openai.com/v1/chat/completions", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": "Bearer " + API_KEY
+            },
+            body: JSON.stringify({
+                model: "gpt-4o-mini",
+                messages: [
+                    {
+                        role: "system",
+                        content: "You are a friendly smart college assistant. Help students with studies, stress, motivation, exams, attendance, and career guidance. Keep answers simple and helpful."
+                    },
+                    {
+                        role: "user",
+                        content: userText
+                    }
+                ]
+            })
+        });
+
+        const data = await res.json();
+        const reply = data.choices?.[0]?.message?.content || "No response";
+
+        botMsg.innerText = reply;
+
+        // 🔊 VOICE OUTPUT
+        speak(reply);
+
+    } catch (error) {
+        botMsg.innerText = "⚠️ Error connecting to AI";
+    }
+
+    chatBox.scrollTop = chatBox.scrollHeight;
+}
+
+// 🎤 VOICE INPUT
+function startVoice() {
+    const recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
+    recognition.lang = "en-US";
+
+    recognition.onresult = function(event) {
+        document.getElementById("userInput").value = event.results[0][0].transcript;
+        sendMessage();
+    };
+
+    recognition.start();
+}
+
+// 🔊 VOICE OUTPUT
+function speak(text) {
+    const speech = new SpeechSynthesisUtterance(text);
+    speech.lang = "en-US";
+    window.speechSynthesis.speak(speech);
+}
+
+</script>
+
+</body>
+</html>
