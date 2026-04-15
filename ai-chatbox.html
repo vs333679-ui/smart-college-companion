@@ -137,24 +137,23 @@ body {
 </div>
 
 <script>
-async function sendMessage() {
+function sendMessage() {
     const input = document.getElementById("userInput");
     const chatBox = document.getElementById("chatBox");
 
     if (input.value.trim() === "") return;
 
-    // User message
+    const userText = input.value;
+
+    // user message
     const userMsg = document.createElement("div");
     userMsg.className = "message user";
-    userMsg.innerText = input.value;
+    userMsg.innerText = userText;
     chatBox.appendChild(userMsg);
 
-    const userText = input.value;
     input.value = "";
 
-    chatBox.scrollTop = chatBox.scrollHeight;
-
-    // Typing animation
+    // bot typing
     const botMsg = document.createElement("div");
     botMsg.className = "message bot";
     botMsg.innerText = "Typing...";
@@ -162,25 +161,24 @@ async function sendMessage() {
 
     chatBox.scrollTop = chatBox.scrollHeight;
 
-    try {
-        const res = await fetch("http://localhost:3000/chat", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({ message: userText })
-        });
+    // fake AI response
+    setTimeout(() => {
+        botMsg.innerText = "AI Response: " + generateAI(userText);
+        chatBox.scrollTop = chatBox.scrollHeight;
+    }, 1000);
+}
 
-        const data = await res.json();
-        botMsg.innerText = data.reply;
+// simple AI logic
+function generateAI(text) {
+    text = text.toLowerCase();
 
-    } catch (error) {
-        botMsg.innerText = "⚠️ Error connecting to AI server";
-    }
+    if (text.includes("hello")) return "Hello! I am your AI assistant 🤖";
+    if (text.includes("what")) return "I can help you with studies and questions 📚";
+    if (text.includes("math")) return "Math is about numbers and logic 📊";
+    if (text.includes("physics")) return "Physics explains how the universe works 🌍";
 
-    chatBox.scrollTop = chatBox.scrollHeight;
+    return "I am still learning but I understood: " + text;
 }
 </script>
-
 </body>
 </html>
