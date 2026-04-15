@@ -9,8 +9,16 @@ const app = express();
 app.use(express.json());
 app.use(cors());
 
+// ✅ PORT fix for Render
+const PORT = process.env.PORT || 3000;
+
 const client = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
+});
+
+// ✅ Root route (browser check ke liye)
+app.get("/", (req, res) => {
+  res.send("AI Backend is running 🚀");
 });
 
 app.post("/chat", async (req, res) => {
@@ -30,10 +38,13 @@ app.post("/chat", async (req, res) => {
     });
 
   } catch (error) {
+    console.error(error); // ✅ error log
     res.status(500).json({ error: "Something went wrong" });
   }
 });
 
-app.listen(3000, () => {
-  console.log("Server running on http://localhost:3000");
+// ✅ use dynamic PORT
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
 });
+  
