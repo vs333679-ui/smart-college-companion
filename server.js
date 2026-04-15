@@ -9,15 +9,19 @@ const app = express();
 app.use(express.json());
 app.use(cors());
 
-// ✅ OpenAI setup
+// 🔥 OpenAI setup
 const client = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
 });
 
-// ✅ API route
+// 🔥 Route
 app.post("/chat", async (req, res) => {
   try {
     const userMessage = req.body.message;
+
+    if (!userMessage) {
+      return res.status(400).json({ error: "Message is required" });
+    }
 
     const response = await client.chat.completions.create({
       model: "gpt-4o-mini",
@@ -32,13 +36,14 @@ app.post("/chat", async (req, res) => {
     });
 
   } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: "Server error" });
+    console.error("ERROR:", error.message);
+    res.status(500).json({ error: error.message });
   }
 });
 
-// ✅ IMPORTANT for Render
+// 🔥 IMPORTANT (Render ke liye)
 const PORT = process.env.PORT || 3000;
+
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
