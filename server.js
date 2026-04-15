@@ -9,26 +9,20 @@ const app = express();
 app.use(express.json());
 app.use(cors());
 
-// ✅ PORT fix for Render
-const PORT = process.env.PORT || 3000;
-
+// ✅ OpenAI setup
 const client = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
 });
 
-// ✅ Root route (browser check ke liye)
-app.get("/", (req, res) => {
-  res.send("AI Backend is running 🚀");
-});
-
+// ✅ API route
 app.post("/chat", async (req, res) => {
   try {
     const userMessage = req.body.message;
 
     const response = await client.chat.completions.create({
-      model: "gpt-4.1-mini",
+      model: "gpt-4o-mini",
       messages: [
-        { role: "system", content: "You are a helpful assistant." },
+        { role: "system", content: "You are a helpful college assistant." },
         { role: "user", content: userMessage }
       ],
     });
@@ -38,13 +32,13 @@ app.post("/chat", async (req, res) => {
     });
 
   } catch (error) {
-    console.error(error); // ✅ error log
-    res.status(500).json({ error: "Something went wrong" });
+    console.error(error);
+    res.status(500).json({ error: "Server error" });
   }
 });
 
-// ✅ use dynamic PORT
+// ✅ IMPORTANT for Render
+const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
-  
