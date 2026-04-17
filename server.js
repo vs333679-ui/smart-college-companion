@@ -16,7 +16,8 @@ app.use(express.json());
 
 // ✅ OpenAI setup
 const client = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY,
+  apiKey: process.env.GROQ_API_KEY,
+  baseURL: "https://api.groq.com/openai/v1",
 });
 
 // ✅ Test route (browser check ke liye)
@@ -34,7 +35,7 @@ app.post("/chat", async (req, res) => {
     }
 
     const response = await client.chat.completions.create({
-      model: "gpt-4o-mini",
+     model: "llama3-8b-8192",
       messages: [
         { role: "system", content: "You are a helpful college assistant." },
         { role: "user", content: userMessage }
