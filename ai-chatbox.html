@@ -2,120 +2,124 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>AI Chat | Smart College Companion</title>
+<title>AI Chat</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <style>
 body {
     background: #0f172a;
-    color: white;
-    font-family: Arial;
+    font-family: sans-serif;
     display: flex;
     justify-content: center;
     align-items: center;
     height: 100vh;
 }
-.chat-container {
-    width: 400px;
-    height: 600px;
+.chat {
+    width: 350px;
+    height: 500px;
     background: #1e293b;
-    border-radius: 20px;
+    border-radius: 10px;
     display: flex;
     flex-direction: column;
 }
-.chat-header {
-    background: #6366f1;
-    padding: 15px;
-    text-align: center;
-}
-.chat-box {
+.messages {
     flex: 1;
-    padding: 10px;
     overflow-y: auto;
-}
-.message {
-    margin: 8px;
     padding: 10px;
-    border-radius: 10px;
+}
+.msg {
+    margin: 5px;
+    padding: 8px;
+    border-radius: 8px;
     max-width: 70%;
 }
-.user {
-    background: #6366f1;
+.user { 
+    background: #6366f1; 
+    color: white; 
     margin-left: auto;
 }
-.bot {
-    background: #334155;
+.bot { 
+    background: #334155; 
+    color: white; 
 }
-.chat-input {
+
+.input {
     display: flex;
 }
-.chat-input input {
+input {
     flex: 1;
     padding: 10px;
 }
-.chat-input button {
+button {
     padding: 10px;
     background: green;
     color: white;
+    cursor: pointer;
 }
 </style>
 </head>
 
 <body>
 
-<div class="chat-container">
+<div class="chat">
+    <div class="messages" id="chatBox"></div>
 
-<div class="chat-header">🤖 AI Assistant</div>
-
-<div class="chat-box" id="chatBox"></div>
-
-<div class="chat-input">
-<input type="text" id="userInput" placeholder="Type message..." />
-<button onclick="sendMessage()">Send</button>
-</div>
-
+    <div class="input">
+        <input id="input" placeholder="Type..." />
+        <button onclick="send()">Send</button>
+    </div>
 </div>
 
 <script>
-function sendMessage() {
-    const input = document.getElementById("userInput");
+async function send() {
+    const input = document.getElementById("input");
     const chatBox = document.getElementById("chatBox");
 
-    if (input.value.trim() === "") return;
+    const text = input.value.trim();
+    if (!text) return;
 
-    const userText = input.value;
-
-    // user message
+    // ✅ User message
     const userMsg = document.createElement("div");
-    userMsg.className = "message user";
-    userMsg.innerText = userText;
+    userMsg.className = "msg user";
+    userMsg.innerText = text;
     chatBox.appendChild(userMsg);
 
     input.value = "";
 
-    // bot message
+    // ✅ Bot typing
     const botMsg = document.createElement("div");
-    botMsg.className = "message bot";
+    botMsg.className = "msg bot";
     botMsg.innerText = "Typing...";
     chatBox.appendChild(botMsg);
 
     chatBox.scrollTop = chatBox.scrollHeight;
 
-    // 🔥 REAL API CALL
-    fetch("https://smart-college-companion-1.onrender.com/chat", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify({ message: userText })
-    })
-    .then(res => res.json())
-    .then(data => {
-        botMsg.innerText = data.reply;
-    })
-    .catch(err => {
-        botMsg.innerText = "Error connecting to AI 😢";
-    });
+    try {
+        const res = await fetch("https://smart-college-companion-1.onrender.com/chat", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({ message: text })
+        });
+
+        const data = await res.json();
+
+        console.log(data); // 🔥 debug
+
+        // ✅ FIX
+        if (data.reply) {
+            botMsg.innerText = data.reply;
+        } else {
+            botMsg.innerText = "No response from AI 😢";
+        }
+
+    } catch (err) {
+        console.error(err);
+        botMsg.innerText = "Server error 😢";
+    }
+
+    chatBox.scrollTop = chatBox.scrollHeight;
 }
 </script>
 
