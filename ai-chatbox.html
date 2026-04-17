@@ -5,26 +5,16 @@
 <title>AI Chat | Smart College Companion</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
-
 <style>
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: 'Poppins', sans-serif;
-}
-
 body {
     background: #0f172a;
     color: white;
+    font-family: Arial;
     display: flex;
     justify-content: center;
     align-items: center;
     height: 100vh;
 }
-
-/* Chat Container */
 .chat-container {
     width: 400px;
     height: 600px;
@@ -32,87 +22,41 @@ body {
     border-radius: 20px;
     display: flex;
     flex-direction: column;
-    box-shadow: 0 0 30px rgba(0,0,0,0.5);
-    overflow: hidden;
 }
-
-/* Header */
 .chat-header {
-    background: linear-gradient(45deg, #6366f1, #22c55e);
+    background: #6366f1;
     padding: 15px;
     text-align: center;
-    font-weight: 600;
-    font-size: 18px;
 }
-
-/* Messages */
 .chat-box {
     flex: 1;
-    padding: 15px;
+    padding: 10px;
     overflow-y: auto;
 }
-
 .message {
-    margin: 10px 0;
-    padding: 10px 14px;
-    border-radius: 12px;
-    max-width: 75%;
-    animation: fadeIn 0.3s ease;
+    margin: 8px;
+    padding: 10px;
+    border-radius: 10px;
+    max-width: 70%;
 }
-
 .user {
     background: #6366f1;
-    align-self: flex-end;
+    margin-left: auto;
 }
-
 .bot {
     background: #334155;
-    align-self: flex-start;
 }
-
-/* Input */
 .chat-input {
     display: flex;
-    padding: 10px;
-    background: #0f172a;
 }
-
 .chat-input input {
     flex: 1;
     padding: 10px;
-    border-radius: 10px;
-    border: none;
-    outline: none;
 }
-
 .chat-input button {
-    margin-left: 10px;
-    padding: 10px 15px;
-    border: none;
-    border-radius: 10px;
-    background: #22c55e;
+    padding: 10px;
+    background: green;
     color: white;
-    cursor: pointer;
-    transition: 0.3s;
-}
-
-.chat-input button:hover {
-    background: #16a34a;
-}
-
-/* Animation */
-@keyframes fadeIn {
-    from {opacity: 0; transform: translateY(10px);}
-    to {opacity: 1; transform: translateY(0);}
-}
-
-/* Scrollbar */
-.chat-box::-webkit-scrollbar {
-    width: 5px;
-}
-.chat-box::-webkit-scrollbar-thumb {
-    background: #555;
-    border-radius: 10px;
 }
 </style>
 </head>
@@ -120,19 +64,15 @@ body {
 <body>
 
 <div class="chat-container">
-    
-    <div class="chat-header">
-        🤖 AI Assistant
-    </div>
 
-    <div class="chat-box" id="chatBox">
-        <div class="message bot">Hello 👋 Ask me anything!</div>
-    </div>
+<div class="chat-header">🤖 AI Assistant</div>
 
-    <div class="chat-input">
-        <input type="text" id="userInput" placeholder="Type your message..." />
-        <button onclick="sendMessage()">Send</button>
-    </div>
+<div class="chat-box" id="chatBox"></div>
+
+<div class="chat-input">
+<input type="text" id="userInput" placeholder="Type message..." />
+<button onclick="sendMessage()">Send</button>
+</div>
 
 </div>
 
@@ -153,7 +93,7 @@ function sendMessage() {
 
     input.value = "";
 
-    // bot typing
+    // bot message
     const botMsg = document.createElement("div");
     botMsg.className = "message bot";
     botMsg.innerText = "Typing...";
@@ -161,24 +101,23 @@ function sendMessage() {
 
     chatBox.scrollTop = chatBox.scrollHeight;
 
-    // fake AI response
-    setTimeout(() => {
-        botMsg.innerText = "AI Response: " + generateAI(userText);
-        chatBox.scrollTop = chatBox.scrollHeight;
-    }, 1000);
-}
-
-// simple AI logic
-function generateAI(text) {
-    text = text.toLowerCase();
-
-    if (text.includes("hello")) return "Hello! I am your AI assistant 🤖";
-    if (text.includes("what")) return "I can help you with studies and questions 📚";
-    if (text.includes("math")) return "Math is about numbers and logic 📊";
-    if (text.includes("physics")) return "Physics explains how the universe works 🌍";
-
-    return "I am still learning but I understood: " + text;
+    // 🔥 REAL API CALL
+    fetch("https://smart-college-companion-1.onrender.com/chat", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ message: userText })
+    })
+    .then(res => res.json())
+    .then(data => {
+        botMsg.innerText = data.reply;
+    })
+    .catch(err => {
+        botMsg.innerText = "Error connecting to AI 😢";
+    });
 }
 </script>
+
 </body>
 </html>
