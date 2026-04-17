@@ -6,15 +6,25 @@ import dotenv from "dotenv";
 dotenv.config();
 
 const app = express();
-app.use(express.json());
-app.use(cors());
 
-// 🔥 OpenAI setup
+// ✅ CORS (important)
+app.use(cors({
+  origin: "*"
+}));
+
+app.use(express.json());
+
+// ✅ OpenAI setup
 const client = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
 });
 
-// 🔥 Route
+// ✅ Test route (browser check ke liye)
+app.get("/", (req, res) => {
+  res.send("Server is running 🚀");
+});
+
+// ✅ Chat route
 app.post("/chat", async (req, res) => {
   try {
     const userMessage = req.body.message;
@@ -31,17 +41,22 @@ app.post("/chat", async (req, res) => {
       ],
     });
 
-    res.json({
-      reply: response.choices[0].message.content
-    });
+    // ✅ safe response
+    const reply = response.choices?.[0]?.message?.content || "No reply";
+
+    res.json({ reply });
 
   } catch (error) {
     console.error("ERROR:", error.message);
-    res.status(500).json({ error: error.message });
+
+    res.status(500).json({
+      error: "AI error",
+      details: error.message
+    });
   }
 });
 
-// 🔥 IMPORTANT (Render ke liye)
+// ✅ PORT fix (Render ke liye)
 const PORT = process.env.PORT || 3000;
 
 app.listen(PORT, () => {
